@@ -19,10 +19,3 @@ yarn storybook
 ```
 yarn run cy:open
 ```
-
-# 完全初期のブランチ
-
-以下は create-react-app した直後のものです
-```
-git checkout init/project
-```
