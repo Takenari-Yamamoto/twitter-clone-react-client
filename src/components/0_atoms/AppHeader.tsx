@@ -12,7 +12,7 @@ const AppHeaderComp = styled.button`
 export const AppHeader = () => {
   return (
     <AppHeaderComp>
-      <Link to="/">Home</Link>
+      <Link to="/">Twitter Clone</Link>
       <Link to="/about">About</Link>
     </AppHeaderComp>
   );

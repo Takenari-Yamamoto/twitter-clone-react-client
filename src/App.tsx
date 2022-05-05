@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import useAuth from './api/useAuth';
 import AppButton from './components/0_atoms/AppButton';
 import { AppHeader } from './components/0_atoms/AppHeader';
 import { AppInput } from './components/0_atoms/AppInput';
@@ -17,10 +18,12 @@ const AuthModal = styled.div`
 `;
 
 function App() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('tktkymnr1216@gmail.com');
+  const [password, setPassword] = useState('take12345');
   const [name, setName] = useState('');
-  const [isDisplayLogin, switchModal] = useState(false);
+  const [isDisplayLogin, switchModal] = useState(true);
+
+  const { login, register } = useAuth();
 
   return (
     <div className="App">
@@ -37,7 +40,7 @@ function App() {
             />
             <AppButton
               text={'ログイン'}
-              clickButton={() => console.log('ログイン')}
+              clickButton={() => login({ email, password })}
             />
             <button onClick={() => switchModal(false)}>会員登録する</button>
           </AuthModal>
@@ -51,7 +54,10 @@ function App() {
               input={setPassword}
               placeholder={'パスワード'}
             />
-            <AppButton text={'登録'} clickButton={() => console.log('登録')} />
+            <AppButton
+              text={'登録'}
+              clickButton={() => register({ name, email, password })}
+            />
             <button onClick={() => switchModal(true)}>ログインする</button>
           </AuthModal>
         )}
