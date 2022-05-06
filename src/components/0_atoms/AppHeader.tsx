@@ -1,5 +1,8 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuth from '../../api/useAuth';
+import { AuthContext } from '../../context/AuthContext';
 
 const AppHeaderComp = styled.button`
   display: flex;
@@ -10,10 +13,13 @@ const AppHeaderComp = styled.button`
 `;
 
 export const AppHeader = () => {
+  const auth = useContext(AuthContext);
+  const { logout } = useAuth();
   return (
     <AppHeaderComp>
       <Link to="/">Twitter Clone</Link>
       <Link to="/about">About</Link>
+      {auth?.userAuth ? <p onClick={() => logout()}>Logout</p> : ''}
     </AppHeaderComp>
   );
 };
