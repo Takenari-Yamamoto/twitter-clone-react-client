@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import useAuth from '../../api/useAuth';
+import { AuthContext } from '../../context/AuthContext';
 
 export const MyPage = () => {
   const { fetchMyInfo } = useAuth();
+  const auth = useContext(AuthContext);
 
   const MyPageContainer = styled.div`
     padding: 16px;
@@ -16,9 +18,9 @@ export const MyPage = () => {
   return (
     <MyPageContainer>
       <h1>My Page</h1>
-      {/* <p>id: {userInfo?.id}</p>
-      <p>name: {userInfo?.name}</p>
-      <p>email: {userInfo?.email}</p> */}
+      <p>id: {auth?.userAuth?.id}</p>
+      <p>name: {auth?.userAuth?.name}</p>
+      <p>email: {auth?.userAuth?.email}</p>
     </MyPageContainer>
   );
 };

@@ -5,7 +5,7 @@ import useAuth from './api/useAuth';
 import AppButton from './components/0_atoms/AppButton';
 import { AppInput } from './components/0_atoms/AppInput';
 import { MyPage } from './components/4_pages/MyPage';
-import { AuthContext, AuthProvider } from './context/AuthContext';
+import { AuthContext } from './context/AuthContext';
 
 const Container = styled.div`
   padding: 16px;
@@ -27,19 +27,19 @@ function App() {
 
   const { login, register } = useAuth();
 
+  const auth = useContext(AuthContext);
+
   const clickLoginButton = () => {
     login({ email, password });
   };
 
-  const auth = useContext(AuthContext);
-
   return (
-    <AuthProvider>
-      <div className="App">
+    <div className="App">
+      <Container>
         {auth?.userAuth ? (
           <MyPage />
         ) : (
-          <Container>
+          <div>
             <h1>ログインしてください。まだの人は登録してください。</h1>
             {isDisplayLogin ? (
               <AuthModal>
@@ -81,10 +81,10 @@ function App() {
                 <button onClick={() => switchModal(true)}>ログインする</button>
               </AuthModal>
             )}
-          </Container>
+          </div>
         )}
-      </div>
-    </AuthProvider>
+      </Container>
+    </div>
   );
 }
 

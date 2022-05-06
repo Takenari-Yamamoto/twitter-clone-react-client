@@ -7,21 +7,25 @@ import { About } from './components/4_pages/About';
 import { NotFound } from './components/4_pages/error/NotFound';
 import { MyPage } from './components/4_pages/MyPage';
 import { AppHeader } from './components/0_atoms/AppHeader';
+import { AuthProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   // 参考: https://reffect.co.jp/react/react-router-6#Not_Found_Routes
-  <BrowserRouter>
-    <AppHeader />
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/mypage" element={<MyPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+      <AppHeader />
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

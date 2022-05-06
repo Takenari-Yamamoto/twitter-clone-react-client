@@ -24,7 +24,6 @@ export interface UserInfo {
 }
 
 const useAuth = () => {
-  // const { setUserInfo } = useAuthContext();
   const auth = useContext(AuthContext);
 
   const register = async (params: RegisterParams) => {
@@ -37,21 +36,29 @@ const useAuth = () => {
   };
 
   const login = async (params: LoginParams) => {
+    // auth?.setUserAuth(true);
     try {
       await client.get('/sanctum/csrf-cookie', { withCredentials: true });
       const { data } = await client.post<Token>('/api/login', params);
       // FIX: ローカルストレージやめたい
       localStorage.setItem('accessToken', data.access_token);
-      await client.post<UserInfo>('/api/me');
-      auth?.setUserAuth(true);
+      const { data: UserInfo } = await client.post<UserInfo>('/api/me');
+      auth?.setUserAuth(UserInfo);
     } catch (e) {
       alert('認証に失敗しました');
     }
   };
 
-  const fetchMyInfo = async () => {};
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    auth?.setUserAuth(null);
+  };
 
-  return { register, login, fetchMyInfo };
+  const fetchMyInfo = async () => {
+    await client.post<UserInfo>('/api/me');
+  };
+
+  return { register, login, logout, fetchMyInfo };
 };
 
 export default useAuth;

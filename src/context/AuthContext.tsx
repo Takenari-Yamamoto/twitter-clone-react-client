@@ -1,18 +1,19 @@
 import React, { createContext, useState } from 'react';
+import { UserInfo } from '../api/useAuth';
 
 type Props = {
   children: React.ReactNode;
 };
 
 type InitialState = {
-  userAuth: boolean;
-  setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  userAuth: UserInfo | null;
+  setUserAuth: React.Dispatch<React.SetStateAction<UserInfo | null>>;
 };
 
 export const AuthContext = createContext<InitialState | null>(null);
 
 export const AuthProvider: React.VFC<Props> = ({ children }) => {
-  const [userAuth, setUserAuth] = useState(false);
+  const [userAuth, setUserAuth] = useState<UserInfo | null>(null);
   return (
     <AuthContext.Provider value={{ userAuth, setUserAuth }}>
       {children}
