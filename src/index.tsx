@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { About } from './components/4_pages/About';
 import { NotFound } from './components/4_pages/error/NotFound';
 import { MyPage } from './components/4_pages/MyPage';
+import { AppHeader } from './components/0_atoms/AppHeader';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   // 参考: https://reffect.co.jp/react/react-router-6#Not_Found_Routes
   <BrowserRouter>
+    <AppHeader />
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/about" element={<About />} />

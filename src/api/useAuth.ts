@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import client from '../service/axios';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import client from '../service/useAxios';
 interface RegisterParams {
   name: string;
   email: string;
@@ -14,18 +14,18 @@ interface Token {
   token_type: 'Bearer';
 }
 
-interface UserInfo {
-  id: number;
-  name: string;
-  created_at: string;
-  email: string;
+export interface UserInfo {
+  id: number | null;
+  name: string | null;
+  created_at: string | null;
+  email: string | null;
   email_verified_at: string | null;
-  updated_at: string;
+  updated_at: string | null;
 }
 
 const useAuth = () => {
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  // const { setUserInfo } = useAuthContext();
+  const auth = useContext(AuthContext);
 
   const register = async (params: RegisterParams) => {
     try {
@@ -42,19 +42,16 @@ const useAuth = () => {
       const { data } = await client.post<Token>('/api/login', params);
       // FIX: ローカルストレージやめたい
       localStorage.setItem('accessToken', data.access_token);
-      // FIX: 遷移は App.js でやりたい
-      navigate('/mypage');
+      await client.post<UserInfo>('/api/me');
+      auth?.setUserAuth(true);
     } catch (e) {
       alert('認証に失敗しました');
     }
   };
 
-  const fetchMyInfo = async () => {
-    const { data } = await client.post<UserInfo>('/api/me');
-    setUserInfo(data);
-  };
+  const fetchMyInfo = async () => {};
 
-  return { register, login, fetchMyInfo, userInfo };
+  return { register, login, fetchMyInfo };
 };
 
 export default useAuth;
