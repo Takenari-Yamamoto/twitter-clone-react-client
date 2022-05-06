@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import styled from 'styled-components';
 import useAuth from './api/useAuth';
 import AppButton from './components/0_atoms/AppButton';
@@ -25,6 +26,10 @@ function App() {
 
   const { login, register } = useAuth();
 
+  const clickLoginButton = () => {
+    login({ email, password });
+  };
+
   return (
     <div className="App">
       <AppHeader />
@@ -40,7 +45,7 @@ function App() {
             />
             <AppButton
               text={'ログイン'}
-              clickButton={() => login({ email, password })}
+              clickButton={() => clickLoginButton()}
             />
             <button onClick={() => switchModal(false)}>会員登録する</button>
           </AuthModal>

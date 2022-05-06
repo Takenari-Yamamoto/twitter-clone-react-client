@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { About } from './components/4_pages/About';
 import { NotFound } from './components/4_pages/error/NotFound';
+import { MyPage } from './components/4_pages/MyPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +16,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/about" element={<About />} />
+      <Route path="/mypage" element={<MyPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
