@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserInfo } from '../api/useAuth';
 
-// const accessToken = JSON.parse(localStorage.getItem('userData'));
+// FIXME: 状態管理見直したい
 const userData: UserInfo = JSON.parse(localStorage.userData);
 
 console.log(1, userData);

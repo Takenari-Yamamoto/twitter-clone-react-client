@@ -21,8 +21,7 @@ const usePost = () => {
   const fetchAllPosts = async () => {
     try {
       const { data } = await client.get<Post[]>('api/posts');
-      console.log(2, data);
-      setPostList(data);
+      setPostList(data.reverse());
     } catch (e) {
       console.error(e);
     }
