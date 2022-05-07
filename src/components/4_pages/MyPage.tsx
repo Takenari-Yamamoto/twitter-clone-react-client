@@ -4,16 +4,16 @@ import useAuth from '../../api/useAuth';
 import { AuthContext } from '../../context/AuthContext';
 
 export const MyPage = () => {
-  const { fetchMyInfo } = useAuth();
+  // const { fetchMyInfo } = useAuth();
   const auth = useContext(AuthContext);
 
   const MyPageContainer = styled.div`
     padding: 16px;
   `;
 
-  useEffect(() => {
-    fetchMyInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchMyInfo();
+  // }, []);
 
   return (
     <MyPageContainer>

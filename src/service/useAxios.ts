@@ -1,12 +1,17 @@
 import axios from 'axios';
+import { UserInfo } from '../api/useAuth';
 
-const accessToken = localStorage.getItem('accessToken') ?? '';
+// const accessToken = JSON.parse(localStorage.getItem('userData'));
+const userData: UserInfo = JSON.parse(localStorage.userData);
+
+console.log(1, userData);
+console.log(2, userData.access_token);
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${userData.access_token ?? ''}`,
   },
 });
 
