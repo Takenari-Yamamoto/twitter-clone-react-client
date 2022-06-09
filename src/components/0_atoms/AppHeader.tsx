@@ -20,6 +20,11 @@ export const AppHeader = () => {
       <Link to="/">Twitter Clone</Link>
       <Link to="/about">About</Link>
       {auth?.userAuth ? <p onClick={() => logout()}>Logout</p> : ''}
+      {auth?.userAuth ? (
+        <Link to="/mypage">ようこそ{auth?.userAuth.name}さん</Link>
+      ) : (
+        ''
+      )}
     </AppHeaderComp>
   );
 };

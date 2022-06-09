@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
-import useAuth from './api/useAuth';
+import useAuth, { UserInfo } from './api/useAuth';
+import usePost, { PostParams } from './api/usePost';
 import AppButton from './components/0_atoms/AppButton';
+import { AppCreatePost } from './components/1_molecules/AppCreatePost';
 import { AppInput } from './components/0_atoms/AppInput';
-import { MyPage } from './components/4_pages/MyPage';
+import { AppPostCard } from './components/0_atoms/AppPostCard';
 import { AuthContext } from './context/AuthContext';
 
 const Container = styled.div`
@@ -25,19 +27,39 @@ function App() {
   const [name, setName] = useState('');
   const [isDisplayLogin, switchModal] = useState(true);
 
+  // NOTE: 認証
   const { login, register } = useAuth();
-
   const auth = useContext(AuthContext);
+  const clickLoginButton = async () => {
+    await login({ email, password });
+    fetchAllPosts();
+  };
 
-  const clickLoginButton = () => {
-    login({ email, password });
+  // 全件取得
+  const { fetchAllPosts, postList, createPost } = usePost();
+  const clickDetail = (id: number) => {
+    console.log(id);
+  };
+  useEffect(() => {
+    const userData: UserInfo = JSON.parse(localStorage.userData);
+    auth?.setUserAuth(userData);
+    fetchAllPosts();
+  }, []);
+
+  const clickPostButton = (postParams: PostParams) => {
+    createPost(postParams);
+    fetchAllPosts();
   };
 
   return (
     <div className="App">
       <Container>
         {auth?.userAuth ? (
-          <MyPage />
+          <>
+            <AppCreatePost click={clickPostButton} />
+            <p>全件取得</p>
+            <AppPostCard postList={postList} click={clickDetail} />
+          </>
         ) : (
           <div>
             <h1>ログインしてください。まだの人は登録してください。</h1>
